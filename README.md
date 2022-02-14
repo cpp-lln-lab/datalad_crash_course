@@ -397,17 +397,22 @@ write (`w`), execute (`x`) rights on those files. More on unix file permission
 We cannot edit this file, because its content has been "annexed".
 
 You can usually tell a file is annexed when listing it in a terminal with
-`ls -l`.
+`ls -l` or when viewing it with `tree`
 
 ```bash
 lrwxrwxrwx 1 remi remi  139 Feb 14 14:23 sub-con07_ses-01_T1w.nii -> ../../../.git/annex/objects/j5/G3/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii
 ```
 
-The `l` means that the file you are looking at is a "link" and the `->` at the
-end shows what this links to: in this case a file in the `.git/annex` in the
-root of the dataset.
+- the `l` means that the file you are looking at is a "link"
+- the `->` at the end shows what this links to: in this case a file in the
+  `.git/annex` in the root of the dataset
+- the file size (the 5th column on the `ls` output above) is usually a hit that
+  the content of that file has been annexed: in this case the "size" of this
+  nifti image is less than that a very simple JSON file (which sounds unlikely
+  if the content were not annexed).
 
-Datalad in fact acts a bit as as "a wrapper" around:
+A hand wavy explanation of this annexation behavior is that Datalad in fact acts
+a bit as as "a wrapper" around:
 
 1. git that is good for version controlling text based files (like code, TSV,
    JSON, ...) but start struggling with non-text files and large number of files
@@ -459,6 +464,8 @@ sub-con07
         ├── sub-con07_ses-01_task-visMotion_bold.nii -> ../../../.git/annex/objects/mJ/PF/MD5E-s370137952--89a6190d568fa6cbb0fd1f23eb763b0c.nii/MD5E-s370137952--89a6190d568fa6cbb0fd1f23eb763b0c.nii
         └── sub-con07_ses-01_task-visMotion_events.tsv
 ```
+
+Also an `ls -l` would now show you the actual actual size of this file.
 
 If you use the `datalad status` command, datalad will tell that this file has
 been modified because it was taken out of the annex.
@@ -712,11 +719,58 @@ cows come home.
 
 ## Dropping data
 
-You are running low on space and you would like to get rid of "unused data".
+Sometimes our dataset get big and we usually start transferring them (or part of
+them) on external hard drives and then we start having to keep track of which
+file is backed up where, when was the back up done.
+
+Then we get told we need several back ups in different locations, so now we have
+to track several copies of the same dataset and make sure that they are all in
+synch with each other.
+
+Datalad allows you to keep a local copy of your data and to keep your different
+back up (as siblings). But if you need to make some space on your computer
+without having to delete a dataset, you can drop the content of files.
+
+Conceptually this is the a bit like the opposite of the `datalad get` command we
+saw earlier that would get the content of file from a sibling.
+
+`datalad drop` will get rid of a content provided that this content exists in
+another sibling.
+
+To know how much data exists in your annex currently you can use
+`datalad status --annex all`.
+
+**Example output**
+
+```bash
+7 annex'd files (24.0 MB/1.1 GB present/total size)
+nothing to save, working tree clean
+```
+
+You can then drop the content of specific files.
 
 ```bash
 datalad drop ${path_to_file}
 ```
+
+The nuclear option is to drop the entire dataset
+
+**Example output**
+
+```bash
+datalad drop .
+```
+
+**Example**
+
+```bash
+drop(ok): /home/remi/gin/CPP_visMotion-raw/sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii (file) [locking a_new_beginning...]
+drop(ok): /home/remi/gin/CPP_visMotion-raw/sub-con07/ses-01/anat/sub-con07_ses-01_T1w_reorient.mat (file) [locking a_new_beginning...]
+action summary:
+  drop (notneeded: 20, ok: 2)
+```
+
+<hr>
 
 ## Creating a dataset from scratch
 
@@ -749,6 +803,8 @@ Grab a coffee
 - configuration, branches
 -->
 
+<hr>
+
 ## Useful tips
 
 If you don't remember the specifics of a command, type the name of that command
@@ -770,10 +826,10 @@ More
     <button style="margin: 10px"><a href="#TOC">back to the top</a></button>
     <br />
     <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-        <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" />
+        <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
     </a>
     This work is licensed under a
     <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-        Creative Commons Attribution 4.0 International License
+    Creative Commons Attribution 4.0 International License
     </a>.
 </footer>
