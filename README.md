@@ -248,14 +248,14 @@ datalad get ${path_to_the_folder_or_file}
 
 ```bash
 cd /home/remi/gin/CPP_visMotion-raw
-datalad get /home/remi/gin/CPP_visMotion-raw/sub-con07/anat/*_T1w.nii
+datalad get /home/remi/gin/CPP_visMotion-raw/sub-con07/anat/*T1w.nii
 ```
 
 <details><summary> <b>What's with the star <code>*</code>?</b> </summary><br>
 
 That's a UNIX thing to allow you to say "any sequence of characters". So in our
 case that would mean any file in the <code>anat</code> folder that ends in
-<code>\_T1w.nii</code>.
+<code>T1w.nii</code>.
 
 </details>
 
@@ -275,9 +275,66 @@ And eventually:
 get(ok): sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii (file) [from origin...]
 ```
 
+**Note**
+
+Depending on the color highlighting of your terminal, you might see a difference
+on the color of the file whose content you just got.
+
 ## Try to open a datafile and succeeding
 
+You can now browse the actual content of that file.
+
+![fsl_happy](./images/fsl_happy.png)
+
 ## Modifying data and failing
+
+Let's now try to something basic on this image to modify it, like reorienting it
+with SPM by setting the origin of the image to the anterior commissure.
+
+In SPM, you can open the image with the `CheckReg` tool, locate the anterior
+commissure and then right click `Reorient --> Set origin to cross-hair` and then
+select the images to apply this change to.
+
+SPM will try to modify the header of the image to implement the requested and
+will fail majestically in the process.
+
+![spm_not_happy](./images/spm_not_happy.png)
+
+```matlab
+------------------------------------------------------------------------
+14-Feb-2022 15:49:23 - Running job #1
+------------------------------------------------------------------------
+14-Feb-2022 15:49:23 - Running 'Reorient Images'
+Error: Permission denied
+There was a problem writing to the header of
+  "/home/remi/gin/CPP_visMotion-raw/sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii"
+14-Feb-2022 15:49:24 - Failed  'Reorient Images'
+Error using nifti/create (line 26)
+Unable to write header for "/home/remi/gin/CPP_visMotion-raw/sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii".
+In file "/home/remi/matlab/SPM/spm12/@nifti/create.m" (v7147), function "create" at line 26.
+In file "/home/remi/matlab/SPM/spm12/spm_get_space.m" (v6379), function "spm_get_space" at line 51.
+In file "/home/remi/matlab/SPM/spm12/config/spm_run_reorient.m" (v6078), function "spm_run_reorient" at line 33.
+
+The following modules did not run:
+Failed: Reorient Images
+
+Error using MATLABbatch system
+Job execution failed. The full log of this run can be found in MATLAB command window, starting with the lines (look for the line
+showing the exact #job as displayed in this error message)
+------------------
+Running job #1
+------------------
+
+Error while evaluating Menu Callback.
+```
+
+The important error in there is `Error: Permission denied`.
+
+```
+ls -l sub-con07/ses-01/anat
+-rwxrwxr-x 1 remi remi 2170 Feb 14 14:23 sub-con07_ses-01_T1w.json
+lrwxrwxrwx 1 remi remi  139 Feb 14 14:23 sub-con07_ses-01_T1w.nii -> ../../../.git/annex/objects/j5/G3/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii
+```
 
 ## Unlocking data
 
