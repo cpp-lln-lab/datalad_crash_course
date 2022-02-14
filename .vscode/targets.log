@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Feb 14 10:50:31 2022
+# Make data base, printed on Mon Feb 14 20:31:46 2022
 
 # Variables
 
@@ -41,7 +41,7 @@ GDMSESSION = ubuntu
 # environment
 XMODIFIERS = @im=ibus
 # makefile
-CURDIR := /home/remi/github/bids_cookbook
+CURDIR := /home/remi/github/datalad_crash_course
 # makefile
 SHELL = /bin/sh
 # environment
@@ -75,7 +75,7 @@ INFOPATH = /home/linuxbrew/.linuxbrew/share/info:
 # environment
 CLUTTER_IM_MODULE = xim
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-2185c66a-f019-4d4d-97b5-392d8d005c65.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-61637fe8-3df7-449e-88a6-27047c1fc36b.sock
 # environment
 LC_NAME = en_GB.UTF-8
 # environment
@@ -93,7 +93,7 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-SESSION_MANAGER = local/remi-XPS-15-9570:@/tmp/.ICE-unix/6064,unix/remi-XPS-15-9570:/tmp/.ICE-unix/6064
+SESSION_MANAGER = local/remi-XPS-15-9570:@/tmp/.ICE-unix/9390,unix/remi-XPS-15-9570:/tmp/.ICE-unix/9390
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -123,7 +123,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 8862
+GIO_LAUNCHED_DESKTOP_FILE_PID = 17022
 # automatic
 %F = $(notdir $%)
 # environment
@@ -135,13 +135,13 @@ GTK_IM_MODULE = ibus
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
-PWD = /home/remi/github/bids_cookbook
+PWD = /home/remi/github/datalad_crash_course
 # environment
 HOMEBREW_CELLAR = /home/linuxbrew/.linuxbrew/Cellar
 # environment
 XDG_SEAT = seat0
 # environment
-SSH_AGENT_PID = 6169
+SSH_AGENT_PID = 9493
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -284,8 +284,8 @@ GJS_DEBUG_TOPICS = JS ERROR;JS LOG
 SUFFIXES :=
 # environment
 _CE_M =
-
 # environment
+
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
 WINDOWPATH = 2
@@ -302,7 +302,7 @@ LC_ADDRESS = en_GB.UTF-8
 # environment
 LANG = C
 # environment
-VSCODE_PID = 8862
+VSCODE_PID = 17022
 # environment
 _CE_CONDA =
 # variable set hash-table stats:
@@ -314,9 +314,9 @@ _CE_CONDA =
 
 # Directories
 
-# . (device 64768, inode 31441780): 18 files, no impossibilities.
+# . (device 64768, inode 31441804): 15 files, no impossibilities.
 
-# 18 files, no impossibilities in 1 directories.
+# 15 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -334,7 +334,7 @@ all:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-02-14 10:49:46.648938683
+#  Last modified 2022-02-14 10:51:30.390122197
 #  File has been updated.
 #  Successfully updated.
 
@@ -359,10 +359,10 @@ clean:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 24 / storage = 252 B / avg = 10 B
-# current buf: size = 8162 B / used = 252 B / count = 24 / avg = 10 B
+# strcache buffers: 1 (0) / strings = 21 / storage = 217 B / avg = 10 B
+# current buf: size = 8162 B / used = 217 B / count = 21 / avg = 10 B
 
-# strcache performance: lookups = 29 / hit rate = 17%
+# strcache performance: lookups = 26 / hit rate = 19%
 # hash-table stats:
-# Load=24/8192=0%, Rehash=0, Collisions=1/29=3%
-# Finished Make data base on Mon Feb 14 10:50:31 2022
+# Load=21/8192=0%, Rehash=0, Collisions=1/26=4%
+# Finished Make data base on Mon Feb 14 20:31:46 2022

@@ -2,27 +2,29 @@
 
 <!-- insert datalad and crash test dummies image -->
 
+![datalad_gif](http://handbook.datalad.org/en/latest/_images/datalad-animated.gif)
+
 <h2 id="TOC"> Table of content </h2>
 
 - [Goals](#goals)
 - [Prerequisites](#prerequisites)
-    - [Pre-flight checks](#pre-flight-checks)
+  - [Pre-flight checks](#pre-flight-checks)
 - [Install a BIDS dataset](#install-a-bids-dataset)
-    - [From GIN](#from-gin)
-    - [From openneuro](#from-openneuro)
-    - [Install it](#install-it)
+  - [From GIN](#from-gin)
+  - [From openneuro](#from-openneuro)
+  - [Install it](#install-it)
 - [Try to open a “text” file](#try-to-open-a-text-file)
 - [Try to open a datafile and failing](#try-to-open-a-datafile-and-failing)
-    - [🚨 Remote content 🚨](#-remote-content-)
+  - [🚨 Remote content 🚨](#-remote-content-)
 - [Getting data](#getting-data)
 - [Try to open a datafile and succeeding](#try-to-open-a-datafile-and-succeeding)
 - [Modifying data and failing](#modifying-data-and-failing)
-    - [🚨 Annexed files 🚨](#-annexed-files-)
+  - [🚨 Annexed files 🚨](#-annexed-files-)
 - [Unlocking data](#unlocking-data)
 - [Modifying data and succeeding](#modifying-data-and-succeeding)
 - [Saving data](#saving-data)
 - [Pushing data and failing](#pushing-data-and-failing)
-    - [🚨 Siblings 🚨](#-siblings-)
+  - [🚨 Siblings 🚨](#-siblings-)
 - [Creating a remote repo](#creating-a-remote-repo)
 - [Pushing data and succeeding](#pushing-data-and-succeeding)
 - [Dropping data](#dropping-data)
@@ -98,7 +100,7 @@ SSH key to connect to GIN. This is normal and you can safely say "yes".
 install(ok): /home/remi/CPP_visMotion-raw (dataset)
 ```
 
-If this install work you can remove the dataset with.
+If this install works, you can remove the dataset with.
 
 ```bash
 rm -rf ~/CPP_visMotion-raw
@@ -125,8 +127,8 @@ To install a dataset from GIN make sure you copy the SSH url:
 - a dataset from [openneuro](https://openneuro.org/)
   - Each dataset has a "download" link that will give you the datalad command to
     install it.
-  - See for example this dataset:
-    https://openneuro.org/datasets/ds004019/versions/1.0.0/download
+  - See for example
+    [this dataset](https://openneuro.org/datasets/ds004019/versions/1.0.0/download)
 
 ### Install it
 
@@ -185,14 +187,17 @@ terminal.
 If we have a quick look at the content of our data, we can see that it contains
 some plain text file like JSON or TSV.
 
+**Example**
+
 ```bash
-tree -L 1 /home/remi/gin/CPP_visMotion-raw
+cd /home/remi/gin/CPP_visMotion-raw
+tree -L 1
 ```
 
 **Example output**
 
 ```bash
-/home/remi/gin/CPP_visMotion-raw
+.
 ├── CHANGES
 ├── dataset_description.json
 ├── participants.json
@@ -218,14 +223,16 @@ fsleyes, SPM CheckReg...
 If you have installed an EEG dataset you can try to load it with the tools you
 usually use to quickly view those files.
 
+**Example**
+
 ```bash
-tree -L 3 /home/remi/gin/CPP_visMotion-raw/sub-con07/
+tree -L 3 sub-con07
 ```
 
 **Example output**
 
 ```bash
-/home/remi/gin/CPP_visMotion-raw/sub-con07/
+sub-con07
 └── ses-01
     ├── anat
     │   ├── sub-con07_ses-01_T1w.json
@@ -243,9 +250,17 @@ dataset.
 ### 🚨 Remote content 🚨
 
 This is because even though, the file shows up on your computer its "content"
-has not been downloaded on your computer. This is also why installing the whole
-dataset was so quick. To fix this issue, we must get the content from where the
-dataset was installed.
+has not been downloaded on your computer.
+
+As one of our lab member once said:
+
+> `datalad install` gives you bunch of "ghost file" 👻 that have the right shape
+> but no substance.
+
+This is also why installing the whole dataset was so quick: very little data was
+actually downloaded.
+
+To fix this issue, we must get the content from where the dataset was installed.
 
 ## Getting data
 
@@ -256,16 +271,21 @@ from within the dataset (from a folder in the dataset).
 datalad get ${path_to_the_folder_or_file}
 ```
 
+**Example**
+
 ```bash
 cd /home/remi/gin/CPP_visMotion-raw
-datalad get /home/remi/gin/CPP_visMotion-raw/sub-con07/anat/*T1w.nii
+datalad get sub-con07/anat/*T1w.nii
 ```
 
 <details><summary> <b>What's with the star <code>*</code>?</b> </summary><br>
 
-That's a UNIX thing to allow you to say "any sequence of characters". So in our
+That's a bash thing to allow you to say "any sequence of characters". So in our
 case that would mean any file in the <code>anat</code> folder that ends in
 <code>T1w.nii</code>.
+
+More on bash "globbing"
+<a href="https://linuxhint.com/bash_globbing_tutorial/" target="_blank">here</a>
 
 </details>
 
@@ -274,7 +294,6 @@ case that would mean any file in the <code>anat</code> folder that ends in
 **Example output**
 
 ```bash
-datalad get /home/remi/gin/CPP_visMotion-raw/sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii
 Total:   0%|                                                                             | 0.00/25.2M [00:00<?, ? Bytes/s]
 Get sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii:  34%|████████                        | 8.58M/25.2M [00:00<00:00, 64.9M Bytes/s]
 ```
@@ -287,8 +306,8 @@ get(ok): sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii (file) [from origin...]
 
 **Note**
 
-Depending on the color highlighting of your terminal, you might see a difference
-on the color of the file whose content you just got.
+Depending on the color highlighting of your terminal, you might even see a
+difference on the color of the file whose content you just got.
 
 ## Try to open a datafile and succeeding
 
@@ -344,8 +363,15 @@ However if we check the file permissions with our file explorer / finder (or
 with the terminal), we can see that we have "write access" to these data. And
 yet we can edit the simple "text" data and not the non "text" data.
 
+**Example**
+
 ```bash
 ls -l sub-con07/ses-01/anat
+```
+
+**Example output**
+
+```bash
 -rwxrwxr-x 1 remi remi 2170 Feb 14 14:23 sub-con07_ses-01_T1w.json
 lrwxrwxrwx 1 remi remi  139 Feb 14 14:23 sub-con07_ses-01_T1w.nii -> ../../../.git/annex/objects/j5/G3/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii
 ```
@@ -373,33 +399,88 @@ To be able to edit this file, we must first unlock it.
 
 ## Unlocking data
 
-```bash
-datalad unlock /home/remi/gin/CPP_visMotion-raw/sub-con07/anat/*T1w.nii
-```
+This is done with the `datalad unlock` command.
 
 ```bash
-tree -L 3 /home/remi/gin/CPP_visMotion-raw/sub-con07/
+datalad unlock ${path_to_the_folder_or_file}
+```
+
+So in our case:
+
+**Example**
+
+```bash
+datalad unlock sub-con07/ses-01/anat/*T1w.nii
 ```
 
 **Example output**
 
 ```bash
-/home/remi/gin/CPP_visMotion-raw/sub-con07/
+unlock(ok): sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii (file)
+```
+
+The result of unlocking the file will be visible in different ways.
+
+On a `tree` or a `ls` command, it won't show as a link but as an "actual" file.
+
+**Example**
+
+```bash
+tree -L 3 sub-con07
+```
+
+**Example output**
+
+```bash
+sub-con07
 └── ses-01
     ├── anat
     │   ├── sub-con07_ses-01_T1w.json
     │   └── sub-con07_ses-01_T1w.nii
     └── func
         ├── sub-con07_ses-01_task-visMotion_bold.nii -> ../../../.git/annex/objects/mJ/PF/MD5E-s370137952--89a6190d568fa6cbb0fd1f23eb763b0c.nii/MD5E-s370137952--89a6190d568fa6cbb0fd1f23eb763b0c.nii
+        └── sub-con07_ses-01_task-visMotion_events.tsv
+```
+
+If you use the `datalad status` command, datalad will tell that this file has
+been modified because it was taken out of the annex.
+
+**Example output**
+
+```bash
+ modified: sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii (file)
 ```
 
 ## Modifying data and succeeding
+
+Now let's try to modify this file again.
+
+This time SPM seems happy.
+
+```matlab
+------------------------------------------------------------------------
+14-Feb-2022 21:17:17 - Running job #1
+------------------------------------------------------------------------
+14-Feb-2022 21:17:17 - Running 'Reorient Images'
+14-Feb-2022 21:17:18 - Done    'Reorient Images'
+14-Feb-2022 21:17:18 - Done
+```
+
+Now let's see what datalad says about the status of our dataset.
 
 ```bash
 datalad status
 ```
 
 **Example output**
+
+```matlab
+untracked: sub-con07/ses-01/anat/sub-con07_ses-01_T1w_reorient.mat (file)
+ modified: sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii (file)
+```
+
+Now datalad tells us about the files that have been modified and also about the
+new file created by SPM.
 
 ## Saving data
 
