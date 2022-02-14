@@ -1,0 +1,11 @@
+*.m~
+
+source/*.zip
+source/multimodal*
+raw/
+derivatives/
+
+
+# node
+package*
+node_modules*
