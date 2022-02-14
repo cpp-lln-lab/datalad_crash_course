@@ -47,6 +47,11 @@ Git basics might help but are not required.
 But there are things you need to install and do before the workshop:
 
 - [install datalad](http://handbook.datalad.org/en/latest/intro/installation.html)
+  - for Windows, it is preferable to use the
+    [Windows Subsystem Linux install](http://handbook.datalad.org/en/latest/intro/installation.html#ww-wsl2)
+  - if you have a Mac M1, please check
+    [this issue](https://github.com/datalad/datalad/issues/5701) for a
+    workaround in case you run into problems
 - [create a GIN account](https://gin.g-node.org/)
 - [create an SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 - add it to your GIN account:
@@ -64,7 +69,7 @@ In a terminal, make sure that you have a version of datalad >= 0.13
 datalad --version
 ```
 
-Should return something like this:
+**Example output**
 
 ```bash
 datalad 0.13.4
@@ -80,7 +85,7 @@ datalad install -s git@gin.g-node.org:/cpp-lln-lab/CPP_visMotion-raw.git \
 The first time you do this, it will ask you some confirmation about using your
 SSH key to connect to GIN. This is normal and you can safely say "yes".
 
-But it should eventually return something like this:
+**Example output**
 
 ```bash
 install(ok): /home/remi/CPP_visMotion-raw (dataset)
@@ -94,7 +99,7 @@ rm -rf ~/CPP_visMotion-raw
 
 ## Install a BIDS dataset
 
-Choose a dataset you want to install.
+Choose a BIDS dataset you want to install.
 
 ### From GIN
 
@@ -131,6 +136,11 @@ datalad install -s ${url}
 This is how you can call previously stored variables in bash (the language used
 by default in most terminals).
 
+<pre>
+url="git@gin.g-node.org:/cpp-lln-lab/CPP_visMotion-raw.git"
+datalad install -s ${url}
+</pre>
+
 </details>
 
 <br>
@@ -159,11 +169,111 @@ datalad install -s git@gin.g-node.org:/cpp-lln-lab/CPP_visMotion-raw.git \
                 /home/remi/gin/CPP_visMotion-raw
 ```
 
+If everything went smoothly the folder structure and the files should now be on
+your computer and you can browse them in your file explorer or via your
+terminal.
+
 ## Try to open a “text” file
+
+If we have a quick look at the content of our data, we can see that it contains
+some plain text file like JSON or TSV.
+
+```bash
+tree -L 1 /home/remi/gin/CPP_visMotion-raw
+```
+
+**Example output**
+
+```bash
+/home/remi/gin/CPP_visMotion-raw
+├── CHANGES
+├── dataset_description.json
+├── participants.json
+├── participants.tsv
+├── README
+├── sub-con07
+├── sub-con08
+├── sub-con15
+└── task-visMotion_bold.json
+```
+
+Try to open and edit one of these text files with your favorite text editor.
+
+You can both open, modify and save that file.
 
 ## Try to open a datafile and failing
 
+Let's try to open a file that is not "just" a text file.
+
+In this example we could try to open a nifti image (`.nii`) with MRIcron,
+fsleyes, SPM CheckReg...
+
+If you have installed an EEG dataset you can try to load it with the tools you
+usually use to quickly view those files.
+
+```bash
+tree -L 3 /home/remi/gin/CPP_visMotion-raw/sub-con07/
+```
+
+**Example output**
+
+```bash
+/home/remi/gin/CPP_visMotion-raw/sub-con07/
+└── ses-01
+    ├── anat
+    │   ├── sub-con07_ses-01_T1w.json
+    │   └── sub-con07_ses-01_T1w.nii -> ../../../.git/annex/objects/j5/G3/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii
+    └── func
+        ├── sub-con07_ses-01_task-visMotion_bold.nii -> ../../../.git/annex/objects/mJ/PF/MD5E-s370137952--89a6190d568fa6cbb0fd1f23eb763b0c.nii/MD5E-s370137952--89a6190d568fa6cbb0fd1f23eb763b0c.nii
+        └── sub-con07_ses-01_task-visMotion_events.tsv
+```
+
+Apparently fsleyes is not happy when trying to open the T1w file of an installed
+dataset.
+
+![fsl_not_happy](./images/fsl_not_happy.png)
+
+This is because even though, the file shows up on your computer its "content"
+has not been downloaded on your computer. This is also why installing the whole
+dataset was so quick.
+
 ## Getting data
+
+To get the content of a file you use the `datalad get` command that must be run
+from within the dataset (from a folder in the dataset).
+
+```bash
+datalad get ${path_to_the_folder_or_file}
+```
+
+```bash
+cd /home/remi/gin/CPP_visMotion-raw
+datalad get /home/remi/gin/CPP_visMotion-raw/sub-con07/anat/*_T1w.nii
+```
+
+<details><summary> <b>What's with the star <code>*</code>?</b> </summary><br>
+
+That's a UNIX thing to allow you to say "any sequence of characters". So in our
+case that would mean any file in the <code>anat</code> folder that ends in
+<code>\_T1w.nii</code>.
+
+</details>
+
+<br>
+
+**Example output**
+
+```bash
+datalad get /home/remi/gin/CPP_visMotion-raw/sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii
+Total:   0%|                                                                                                                 | 0.00/25.2M [00:00<?, ? Bytes/s]
+Get sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii:  34%|████████████████████                                       | 8.58M/25.2M [00:00<00:00, 64.9M Bytes/s]
+```
+
+And eventually:
+
+```bash
+get(ok): sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii (file) [from origin...]
+```
 
 ## Try to open a datafile and succeeding
 
@@ -188,15 +298,16 @@ datalad install -s git@gin.g-node.org:/cpp-lln-lab/CPP_visMotion-raw.git \
 ## Useful links
 
 - [Datalad handbook](http://handbook.datalad.org/en/latest/index.html)
+- [Datalad cheat sheet](https://raw.githubusercontent.com/datalad-handbook/artwork/master/src/datalad-cheatsheet.pdf)
+- [Datalad aliases - unofficial](https://github.com/Remi-Gau/datalad_aliases)
 
 <footer>
     <hr>
-    <button><a href="#TOC">back to the top</a></button>
+    <button style="margin: 10px"><a href="#TOC">back to the top</a></button>
     <br />
     <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
         <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" />
     </a>
-    <br />
     This work is licensed under a
     <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
         Creative Commons Attribution 4.0 International License
