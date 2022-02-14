@@ -13,17 +13,21 @@
     - [Install it](#install-it)
 - [Try to open a “text” file](#try-to-open-a-text-file)
 - [Try to open a datafile and failing](#try-to-open-a-datafile-and-failing)
+    - [🚨 Remote content 🚨](#-remote-content-)
 - [Getting data](#getting-data)
 - [Try to open a datafile and succeeding](#try-to-open-a-datafile-and-succeeding)
 - [Modifying data and failing](#modifying-data-and-failing)
+    - [🚨 Annexed files 🚨](#-annexed-files-)
 - [Unlocking data](#unlocking-data)
 - [Modifying data and succeeding](#modifying-data-and-succeeding)
 - [Saving data](#saving-data)
 - [Pushing data and failing](#pushing-data-and-failing)
+    - [🚨 Siblings 🚨](#-siblings-)
 - [Creating a remote repo](#creating-a-remote-repo)
 - [Pushing data and succeeding](#pushing-data-and-succeeding)
 - [Dropping data](#dropping-data)
-- [Creating a repo from scratch](#creating-a-repo-from-scratch)
+- [Creating a dataset from scratch](#creating-a-dataset-from-scratch)
+- [Useful tips](#useful-tips)
 - [Useful links](#useful-links)
 
 <details><summary> <b>CLICK ME</b> </summary><br>
@@ -36,8 +40,11 @@
 
 ## Goals
 
-- be able to install a datalad dataset and work with it
-- be able to create a datalad dataset and a remote copy of it online
+- install a datalad dataset and work with it
+- create a datalad dataset and a remote copy of it online
+
+The examples taken here on an MRI dataset but feel free to try this on dataset
+with any other type of data.
 
 ## Prerequisites
 
@@ -233,9 +240,12 @@ dataset.
 
 ![fsl_not_happy](./images/fsl_not_happy.png)
 
+### 🚨 Remote content 🚨
+
 This is because even though, the file shows up on your computer its "content"
 has not been downloaded on your computer. This is also why installing the whole
-dataset was so quick.
+dataset was so quick. To fix this issue, we must get the content from where the
+dataset was installed.
 
 ## Getting data
 
@@ -265,8 +275,8 @@ case that would mean any file in the <code>anat</code> folder that ends in
 
 ```bash
 datalad get /home/remi/gin/CPP_visMotion-raw/sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii
-Total:   0%|                                                                                                                 | 0.00/25.2M [00:00<?, ? Bytes/s]
-Get sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii:  34%|████████████████████                                       | 8.58M/25.2M [00:00<00:00, 64.9M Bytes/s]
+Total:   0%|                                                                             | 0.00/25.2M [00:00<?, ? Bytes/s]
+Get sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii:  34%|████████                        | 8.58M/25.2M [00:00<00:00, 64.9M Bytes/s]
 ```
 
 And eventually:
@@ -295,8 +305,8 @@ In SPM, you can open the image with the `CheckReg` tool, locate the anterior
 commissure and then right click `Reorient --> Set origin to cross-hair` and then
 select the images to apply this change to.
 
-SPM will try to modify the header of the image to implement the requested and
-will fail majestically in the process.
+SPM will try to modify the header of the image to implement the requested change
+and will _fail majestically_ in the process.
 
 ![spm_not_happy](./images/spm_not_happy.png)
 
@@ -330,27 +340,188 @@ Error while evaluating Menu Callback.
 
 The important error in there is `Error: Permission denied`.
 
-```
+However if we check the file permissions with our file explorer / finder (or
+with the terminal), we can see that we have "write access" to these data. And
+yet we can edit the simple "text" data and not the non "text" data.
+
+```bash
 ls -l sub-con07/ses-01/anat
 -rwxrwxr-x 1 remi remi 2170 Feb 14 14:23 sub-con07_ses-01_T1w.json
 lrwxrwxrwx 1 remi remi  139 Feb 14 14:23 sub-con07_ses-01_T1w.nii -> ../../../.git/annex/objects/j5/G3/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii
 ```
 
+The `rwxrwxrwx` at the beginning of these lines defines if we have read (`r`),
+write (`w`), execute (`x`) rights on those files. More on unix file permission
+[here](https://www.tutorialspoint.com/unix/unix-file-permission.htm).
+
+### 🚨 Annexed files 🚨
+
+We cannot edit this file, because its content has been "annexed".
+
+You can usually tell a file is annexed when listing it in a terminal with
+`ls -l`.
+
+```bash
+lrwxrwxrwx 1 remi remi  139 Feb 14 14:23 sub-con07_ses-01_T1w.nii -> ../../../.git/annex/objects/j5/G3/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii
+```
+
+The `l` means that the file you are looking at is a "link" and the `->` at the
+end shows what this links to: in this case a file in the `.git/annex` in the
+root of the dataset.
+
+To be able to edit this file, we must first unlock it.
+
 ## Unlocking data
+
+```bash
+datalad unlock /home/remi/gin/CPP_visMotion-raw/sub-con07/anat/*T1w.nii
+```
+
+```bash
+tree -L 3 /home/remi/gin/CPP_visMotion-raw/sub-con07/
+```
+
+**Example output**
+
+```bash
+/home/remi/gin/CPP_visMotion-raw/sub-con07/
+└── ses-01
+    ├── anat
+    │   ├── sub-con07_ses-01_T1w.json
+    │   └── sub-con07_ses-01_T1w.nii
+    └── func
+        ├── sub-con07_ses-01_task-visMotion_bold.nii -> ../../../.git/annex/objects/mJ/PF/MD5E-s370137952--89a6190d568fa6cbb0fd1f23eb763b0c.nii/MD5E-s370137952--89a6190d568fa6cbb0fd1f23eb763b0c.nii
+```
 
 ## Modifying data and succeeding
 
+```bash
+datalad status
+```
+
+**Example output**
+
 ## Saving data
+
+```bash
+datalad save -m 'setting origin to anterior commissure for subject 07'
+```
+
+**Example output**
+
+```bash
+
+```
+
+Saving the file, relocks it in the annex.
+
+```bash
+tree -L 3 /home/remi/gin/CPP_visMotion-raw/sub-con07/anat
+```
+
+**Example output**
+
+```bash
+
+```
 
 ## Pushing data and failing
 
+Now that we have made a change we want to back it up online to make sure it is
+not lost in case our computer catches on fire.
+
+```bash
+datalad push --to origin
+```
+
+**Example output**
+
+```bash
+
+```
+
+### 🚨 Siblings 🚨
+
+Very often you won't have the write access to make changes to repository where
+you got a dataset from. If however you wanted to keep track of your own changes,
+you can have your own copy of that dataset on GIN by creating a
+[sibling](http://handbook.datalad.org/en/latest/glossary.html?highlight=sibling#term-sibling)
+repository on GIN.
+
 ## Creating a remote repo
+
+"clicky part on the GIN interface"
+
+```bash
+datalad siblings add --name ${name} --url ${url}
+```
+
+When creating a sibling on GIN make sure you use the SSH URL to set up your
+sibling.
+
+```bash
+datalad siblings add --name my_gin_repo --url
+```
+
+**Example output**
+
+```bash
+
+```
 
 ## Pushing data and succeeding
 
+```bash
+datalad push --to my_gin_repo
+```
+
+**Example output**
+
+```bash
+
+```
+
 ## Dropping data
 
-## Creating a repo from scratch
+You are running low on space and you would like to get rid of "unused data".
+
+```bash
+datalad drop ${path_to_file}
+```
+
+## Creating a dataset from scratch
+
+```bash
+datalad create ${name_of_the_dataset}
+```
+
+```bash
+datalad create . --force
+```
+
+```bash
+datalad save -m 'save all my data`
+```
+
+Create online repo
+
+```bash
+datalad siblings add --name origin --url
+```
+
+```bash
+datalad push --to origin
+```
+
+Grad a coffee
+
+## Useful tips
+
+If you don't remember the specifics of a command, type the name of that command
+followed by `--help`. For example `datalad create --help`.
+
+More
+[info on how to get help](http://handbook.datalad.org/en/latest/basics/101-135-help.html).
 
 ## Useful links
 
