@@ -50,6 +50,9 @@
 The examples taken here on an MRI dataset but feel free to try this on dataset
 with any other type of data.
 
+<hr>
+<br>
+
 ## Prerequisites
 
 In terms of technical knowledge, knowing some UNIX command line and some of the
@@ -107,6 +110,9 @@ If this install works, you can remove the dataset with.
 ```bash
 rm -rf ~/CPP_visMotion-raw
 ```
+
+<hr>
+<br>
 
 ## Install a BIDS dataset
 
@@ -184,6 +190,9 @@ If everything went smoothly the folder structure and the files should now be on
 your computer and you can browse them in your file explorer or via your
 terminal.
 
+<hr>
+<br>
+
 ## Try to open a “text” file
 
 If we have a quick look at the content of our data, we can see that it contains
@@ -224,6 +233,9 @@ in case you don't have it.
 Try to open and edit one of these text files with your favorite text editor.
 
 You can both open, modify and save that file.
+
+<hr>
+<br>
 
 ## Try to open a datafile and failing
 
@@ -273,6 +285,9 @@ This is also why installing the whole dataset was so quick: very little data was
 actually downloaded.
 
 To fix this issue, we must get the content from where the dataset was installed.
+
+<hr>
+<br>
 
 ## Getting data
 
@@ -326,6 +341,9 @@ difference on the color of the file whose content you just got.
 You can now browse the actual content of that file.
 
 ![fsl_happy](./images/fsl_happy.png)
+
+<hr>
+<br>
 
 ## Modifying data and failing
 
@@ -420,6 +438,9 @@ a bit as as "a wrapper" around:
 
 To be able to edit this file, we must first unlock it.
 
+<hr>
+<br>
+
 ## Unlocking data
 
 This is done with the `datalad unlock` command.
@@ -476,6 +497,9 @@ been modified because it was taken out of the annex.
  modified: sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii (file)
 ```
 
+<hr>
+<br>
+
 ## Modifying data and succeeding
 
 Now let's try to modify this file again.
@@ -506,6 +530,9 @@ untracked: sub-con07/ses-01/anat/sub-con07_ses-01_T1w_reorient.mat (file)
 
 Now datalad tells us about the files that have been modified and also about the
 new file created by SPM.
+
+<hr>
+<br>
 
 ## Saving data
 
@@ -555,6 +582,9 @@ sub-con07/ses-01/anat
 
 See also how the new `.mat` file was annexed as well.
 
+<hr>
+<br>
+
 ## The history of the dataset
 
 You can check all the past changes that have been made to the dataset with the
@@ -573,6 +603,9 @@ Given that more advanced usage of datalad allow you to "travel in time" through
 the history of a dataset to see what it looked like at a given commit, you can
 quickly imagine that having good commit message help you knowing what is your
 "best destination".
+
+<hr>
+<br>
 
 ## Pushing data and failing
 
@@ -614,6 +647,9 @@ repository on GIN.
 The good news is that **unless the data owner has given you the right to do
 so**, it is extremely unlikely you will break or destroy someone else's data.
 
+<hr>
+<br>
+
 ## Creating a remote repo
 
 So let's create a repository on GIN.
@@ -648,6 +684,9 @@ datalad siblings add --name a_new_beginning --url git@gin.g-node.org:/RemiGau/a_
 [WARNING] Could not detect whether a_new_beginning carries an annex. If a_new_beginning is a pure Git remote, this is expected.
 .: a_new_beginning(-) [git@gin.g-node.org:/RemiGau/a_new_beginning.git (git)]
 ```
+
+<hr>
+<br>
 
 ## Pushing data and succeeding
 
@@ -717,6 +756,9 @@ datalad push --to a_new_beginning
 We are not going to do that now otherwise we are going to be at this until the
 cows come home.
 
+<hr>
+<br>
+
 ## Dropping data
 
 Sometimes our dataset get big and we usually start transferring them (or part of
@@ -771,6 +813,7 @@ action summary:
 ```
 
 <hr>
+<br>
 
 ## Creating a dataset from scratch
 
@@ -804,6 +847,7 @@ Grab a coffee
 -->
 
 <hr>
+<br>
 
 ## Useful tips
 
@@ -823,6 +867,7 @@ More
 
 <footer>
     <hr>
+    <br>
     <button style="margin: 10px"><a href="#TOC">back to the top</a></button>
     <br />
     <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
