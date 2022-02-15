@@ -253,7 +253,7 @@ datalad status
 
 ```bash
  modified: README (file)
- ```
+```
 
 When you want to save the changes you made to a dataset, simply use the
 `datalad save` command.
@@ -287,7 +287,8 @@ action summary:
 
 Now let's rename one of our non-text file and see how that goes.
 
-This can be done via your usual file explorer or via the terminal with the move command (`mv`).
+This can be done via your usual file explorer or via the terminal with the move
+command (`mv`).
 
 ```bash
 mv -v sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii
@@ -866,13 +867,13 @@ datalad drop ${path_to_file}
 
 The nuclear option is to drop the entire dataset
 
-**Example output**
+**Example**
 
 ```bash
 datalad drop .
 ```
 
-**Example**
+**Example output**
 
 ```bash
 drop(ok): /home/remi/gin/CPP_visMotion-raw/sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii (file) [locking a_new_beginning...]
@@ -905,7 +906,7 @@ The following steps are things that we have seen in the previous steps.
 1. `datalad siblings add --name origin --url ${url}`
 1. `datalad push --to origin`
 
-Grab a coffee
+Grab a coffee and look at that progress bar go!
 
 <!--
 ## In the next episodes
@@ -932,6 +933,8 @@ More
   - Read at least the 2 first chapters. This will save from a lot of pain and
     confusion.
 - [Datalad cheat sheet](https://raw.githubusercontent.com/datalad-handbook/artwork/master/src/datalad-cheatsheet.pdf)
+- [Datalad research data management course](https://psychoinformatics-de.github.io/rdm-course/)
+- [Basic file system operations with Datalad](http://handbook.datalad.org/en/latest/basics/101-136-filesystem.html)
 - [Datalad aliases - unofficial](https://github.com/Remi-Gau/datalad_aliases)
 
 <footer>
