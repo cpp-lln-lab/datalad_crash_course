@@ -17,7 +17,7 @@
 - [Saving data](#saving-data)
 - [Renaming a file](#renaming-a-file)
 - [Try to open a datafile and failing ❎](#try-to-open-a-datafile-and-failing-)
-  - [🚨 Remote content 🚨](#-remote-content-)
+  - [🚨 Under the hood: remote content 🚨](#-under-the-hood-remote-content-)
 - [Getting data](#getting-data)
 - [Try to open a datafile and succeeding ✔️](#try-to-open-a-datafile-and-succeeding-️)
 - [Modifying data and failing ❎](#modifying-data-and-failing-)
@@ -28,7 +28,7 @@
 - [The history of the dataset](#the-history-of-the-dataset)
 - [Pushing data and failing ❎](#pushing-data-and-failing-)
   - [🚨 Under the hood: siblings 🚨](#-under-the-hood-siblings-)
-- [Creating a remote repo](#creating-a-remote-repo)
+- [Creating a remote repo on GIN](#creating-a-remote-repo-on-gin)
 - [Pushing data and succeeding ✔️](#pushing-data-and-succeeding-️)
 - [Dropping data](#dropping-data)
 - [Creating a dataset from scratch](#creating-a-dataset-from-scratch)
@@ -264,7 +264,7 @@ the save.
 Here are some
 [tips on how to write good save messages](http://handbook.datalad.org/en/latest/basics/101-102-populate.html#fom-commit-message-guidance).
 
-Note that a save are often reffered to as "commits" and that are thus
+Note that "saves" are often referred to as "commits" and that are thus
 accompanied by a "commit message".
 
 **Example**
@@ -282,6 +282,45 @@ action summary:
   add (ok: 1)
   save (ok: 1)
 ```
+
+<details><summary> <b>How often should I save? What should I save?</b> </summary><br>
+
+Note that you can save specific files only with datalad
+
+<pre style="margin-bottom: 10px">
+  datalad save -m ${your_message} ${path_to_file_or_folder_to_save}
+</pre>
+
+An advice that you might hear is:
+
+<blockquote style="margin-bottom: 10px">
+  Commit early. Commit often. A version control advice, not a relationship advice.
+</blockquote>
+
+More serious advices can be found in the
+<a href="https://the-turing-way.netlify.app/reproducible-research/vcs/vcs-git-compare.html#good-practice" target="_blank">Turing
+way book</a>
+
+</details>
+
+<br>
+
+<details><summary> <b>For the GIT users out there...</b> </summary><br>
+
+Datalad does not have what is called a "staging area" in GIT. So there is no
+need to "add" a file before it can be committed.
+
+More info on this
+<a href="http://handbook.datalad.org/en/latest/basics/101-180-FAQ.html#where-is-git-s-staging-area-in-datalad-datasets" target="_blank">here</a>
+
+Even though you CAN use the typical holy trinity of git commands (<code>git
+add</code> / <code>git commit</code> / <code>git push</code>) when working
+within a Datalad dataset, I would recommended using typical Datalad command like
+</code>datalad save</code>, unless you are sure of what you are doing.
+
+</details>
+
+<br>
 
 ## Renaming a file
 
@@ -336,7 +375,7 @@ dataset.
 
 ![fsl_not_happy](./images/fsl_not_happy.png)
 
-### 🚨 Remote content 🚨
+### 🚨 Under the hood: remote content 🚨
 
 This is because even though, the file shows up on your computer its "content"
 has not been downloaded on your computer.
@@ -455,8 +494,8 @@ The important error in there is `Error: Permission denied`.
 
 However if we check the file permissions with our file explorer / finder (or
 with the terminal with the list command `ls -l`), we can see that we have "write
-access" to all of these files. And yet we can edit the simple "text" file and not the
-non "text" data.
+access" to all of these files. And yet we can edit the simple "text" file and
+not the non "text" data.
 
 **Example**
 
@@ -705,7 +744,7 @@ so**, it is extremely unlikely you will break or destroy someone else's data.
 <hr>
 <br>
 
-## Creating a remote repo
+## Creating a remote repo on GIN
 
 So let's create a repository on GIN.
 
@@ -825,8 +864,9 @@ to track several copies of the same dataset and make sure that they are all in
 synch with each other.
 
 Datalad allows you to keep a local copy of your data and to keep your different
-back up (as siblings). But if you need to make some space on your computer
-without having to delete a dataset, you can drop the content of files.
+back up (as siblings) synched. But if you need to make some space on your
+computer without having to delete a dataset, Datalad also allows you to drop the
+content of files locally.
 
 Conceptually this is the a bit like the opposite of the `datalad get` command we
 saw earlier that would get the content of file from a sibling.
@@ -850,13 +890,16 @@ You can then drop the content of specific files.
 datalad drop ${path_to_file}
 ```
 
-The nuclear option is to drop the entire dataset
+The nuclear option 💥☢️ is to drop the entire dataset.
 
 **Example**
 
 ```bash
 datalad drop .
 ```
+
+The `.` is NOT a typo but means "this folder". A bit like `..` means the parent
+folder of where we are now.
 
 **Example output**
 
@@ -872,26 +915,43 @@ action summary:
 
 ## Creating a dataset from scratch
 
-<!-- TODO -->
+> OK that's cool and all to be a data consumer and get data from somewhere else
+> and modify it. But during my PhD I will acquire new data. So how do I start a
+> Datalad dataset from scratch?
+
+To do that you must first create an empty dataset to provide a home for your
+data. This can be done with the `datalad create` command.
 
 ```bash
 datalad create ${name_of_the_dataset}
 ```
 
+This will create a new folder and initiaze a Datalad dataset in it.
+
+> What if I already have a folder with my data and I want to create a dataset in
+> there?
+
+In this case...
+
+![](./images/use_the_force.jpg)
+
 ```bash
-datalad create . --force
+cd ${directory_where_your_data_are}
+datalad create --force .
 ```
 
 ### Backing it up online
 
-The following steps are things that we have seen in the previous steps.
+The following steps are things that we have seen in the previous steps. So
+that's easy peasy, lemon squeezy 🗜️🍋 OK... sort of lemon squeezy... I very
+often have to look those up to make sure I don't mess anything.
 
 1. `datalad save -m 'save all my data'`
 1. Create an online repository on GIN
 1. `datalad siblings add --name origin --url ${url}`
 1. `datalad push --to origin`
 
-Grab a coffee and look at that progress bar go!
+Grab a coffee and look at that progress bar go! 🚀
 
 <!--
 ## In the next episodes
