@@ -777,15 +777,15 @@ datalad siblings add --name ${name} --url ${url}
 **Example**
 
 ```bash
-datalad siblings add --name a_new_beginning --url git@gin.g-node.org:/RemiGau/a_new_beginning.git
+datalad siblings add --name a_new_hope --url git@gin.g-node.org:/RemiGau/a_new_hope.git
 ```
 
 **Example output**
 
 ```bash
-[INFO   ] Could not enable annex remote a_new_beginning. This is expected if a_new_beginning is a pure Git remote, or happens if it is not accessible.
-[WARNING] Could not detect whether a_new_beginning carries an annex. If a_new_beginning is a pure Git remote, this is expected.
-.: a_new_beginning(-) [git@gin.g-node.org:/RemiGau/a_new_beginning.git (git)]
+[INFO   ] Could not enable annex remote a_new_hope. This is expected if a_new_hope is a pure Git remote, or happens if it is not accessible.
+[WARNING] Could not detect whether a_new_hope carries an annex. If a_new_hope is a pure Git remote, this is expected.
+.: a_new_hope(-) [git@gin.g-node.org:/RemiGau/a_new_hope.git (git)]
 ```
 
 <hr>
@@ -796,13 +796,13 @@ datalad siblings add --name a_new_beginning --url git@gin.g-node.org:/RemiGau/a_
 You should now be able to push your changes to this new sibling.
 
 ```bash
-datalad push --to a_new_beginning
+datalad push --to a_new_hope
 ```
 
 **Example output**
 
 ```bash
-Transfer data to 'a_new_beginning':  50%|██████████████████████▌                             | 2.00/4.00 [00:00<00:00, 8.36k Steps/s]
+Transfer data to 'a_new_hope':  50%|██████████████████████▌                             | 2.00/4.00 [00:00<00:00, 8.36k Steps/s]
 Total:   0%|                                                                                 | 0.00/1.17G [00:00<?, ? Bytes/s]
 Copy sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii:  54%|██████████████▏             | 13.7M/25.2M [00:09<00:07, 1.62M Bytes/s]
 ```
@@ -810,10 +810,10 @@ Copy sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii:  54%|█████
 And eventually:
 
 ```bash
-copy(ok): sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii (file) [to a_new_beginning...]
-copy(ok): sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w_reorient.mat (file) [to a_new_beginning...]
-publish(ok): . (dataset) [refs/heads/git-annex->a_new_beginning:refs/heads/git-annex e2c7f02..0a33ba9]
-publish(ok): . (dataset) [refs/heads/master->a_new_beginning:refs/heads/master [new branch]]
+copy(ok): sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii (file) [to a_new_hope...]
+copy(ok): sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w_reorient.mat (file) [to a_new_hope...]
+publish(ok): . (dataset) [refs/heads/git-annex->a_new_hope:refs/heads/git-annex e2c7f02..0a33ba9]
+publish(ok): . (dataset) [refs/heads/master->a_new_hope:refs/heads/master [new branch]]
 action summary:
   copy (ok: 2)
   publish (ok: 2)
@@ -834,7 +834,7 @@ git annex list .
 
 ```
 here
-|a_new_beginning
+|a_new_hope
 ||origin
 |||web
 ||||bittorrent
@@ -853,7 +853,7 @@ So if you wanted to make an entire copy of the original dataset you would to
 
 ```bash
 datalad get .
-datalad push --to a_new_beginning
+datalad push --to a_new_hope
 ```
 
 We are not going to do that now otherwise we are going to be at this until the
@@ -913,8 +913,8 @@ folder of where we are now.
 **Example output**
 
 ```bash
-drop(ok): /home/remi/gin/CPP_visMotion-raw/sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii (file) [locking a_new_beginning...]
-drop(ok): /home/remi/gin/CPP_visMotion-raw/sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w_reorient.mat (file) [locking a_new_beginning...]
+drop(ok): /home/remi/gin/CPP_visMotion-raw/sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii (file) [locking a_new_hope...]
+drop(ok): /home/remi/gin/CPP_visMotion-raw/sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w_reorient.mat (file) [locking a_new_hope...]
 action summary:
   drop (notneeded: 20, ok: 2)
 ```
