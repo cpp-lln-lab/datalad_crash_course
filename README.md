@@ -124,8 +124,8 @@ Choose a BIDS dataset you want to install.
 
 - a
   [public fMRI dataset from our lab](https://gin.g-node.org/cpp-lln-lab/CPP_visMotion-raw)
-- your own dataset from GIN: it should in a private repository you should have
-  access to from the
+- your own dataset from GIN: it should be in a private repository you should
+  have access to in the
   [CPP LLN lab organization on GIN](https://gin.g-node.org/cpp-lln-lab)
 
 To install a dataset from GIN make sure you copy the SSH url:
@@ -318,6 +318,9 @@ action summary:
   save (ok: 1)
 ```
 
+<hr>
+<br>
+
 ## Try to open a datafile and failing
 
 Let's try to open a file that is not "just" a text file.
@@ -327,25 +330,6 @@ fsleyes, SPM CheckReg...
 
 If you have installed an EEG dataset you can try to load it with the tools you
 usually use to quickly view those files.
-
-**Example**
-
-```bash
-tree -L 3 sub-con07
-```
-
-**Example output**
-
-```bash
-sub-con07
-└── ses-01
-    ├── anat
-    │   ├── sub-con07_ses-01_run-01_T1w.nii -> ../../../.git/annex/objects/j5/G3/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii
-    │   └── sub-con07_ses-01_T1w.json
-    └── func
-        ├── sub-con07_ses-01_task-visMotion_bold.nii -> ../../../.git/annex/objects/mJ/PF/MD5E-s370137952--89a6190d568fa6cbb0fd1f23eb763b0c.nii/MD5E-s370137952--89a6190d568fa6cbb0fd1f23eb763b0c.nii
-        └── sub-con07_ses-01_task-visMotion_events.tsv
-```
 
 Apparently fsleyes is not happy when trying to open the T1w file of an installed
 dataset.
@@ -359,8 +343,8 @@ has not been downloaded on your computer.
 
 As one of our lab member once said:
 
-> `datalad install` gives you bunch of "ghost file" 👻 that have the right shape
-> but no substance.
+> `datalad install` gives you bunch of "ghost fileS" 👻🗄️ that have the right
+> shape but no substance.
 
 This is also why installing the whole dataset was so quick: very little data was
 actually downloaded.
@@ -504,7 +488,7 @@ lrwxrwxrwx 1 remi remi  139 Feb 14 14:23 sub-con07_ses-01_run-01_T1w.nii -> ../.
 - the `l` means that the file you are looking at is a "link"
 - the `->` at the end shows what this links to: in this case a file in the
   `.git/annex` in the root of the dataset
-- the file size (the 5th column on the `ls` output above) is usually a hit that
+- the file size (the 5th column on the `ls` output above) is usually a hint that
   the content of that file has been annexed: in this case the "size" of this
   nifti image is less than that a very simple JSON file (which sounds unlikely
   if the content were not annexed).
@@ -512,9 +496,9 @@ lrwxrwxrwx 1 remi remi  139 Feb 14 14:23 sub-con07_ses-01_run-01_T1w.nii -> ../.
 A hand wavy explanation of this annexation behavior is that Datalad in fact acts
 a bit as as "a wrapper" around:
 
-1. git that is good for version controlling text based files (like code, TSV,
+1. `git` that is good for version controlling text based files (like code, TSV,
    JSON, ...) but start struggling with non-text files and large number of files
-2. git-annex that helps for the version control of data files.
+2. `git-annex` that helps for the version control of data files.
 
 To be able to edit this file, we must first unlock it.
 
@@ -658,7 +642,7 @@ See also how the new `.mat` file was annexed as well.
 You can check all the past changes that have been made to the dataset with the
 `git log` command. Type `q` to exit this "log mode".
 
-If you want a less verbose version of the log: `git log --online`.
+If you want a less verbose version of the log: `git log --oneline`.
 
 ```bash
 097059d (HEAD -> master) setting origin to anterior commissure for subject 07
@@ -671,7 +655,7 @@ b003e21 (origin/master, origin/HEAD) initial save
 
 Given that more advanced usage of datalad allow you to "travel in time" through
 the history of a dataset to see what it looked like at a given commit, you can
-quickly imagine that having good commit message help you knowing what is your
+quickly imagine that having good commit messages helps you knowing what is your
 "best destination".
 
 <hr>
@@ -680,7 +664,7 @@ quickly imagine that having good commit message help you knowing what is your
 ## Pushing data and failing
 
 Now that we have made a change we want to back it up online to make sure it is
-not lost in case our computer catches on fire.
+not lost in case our computer catches on fire. 💻🔥
 
 ```bash
 datalad push --to ${sibling_name}
@@ -939,12 +923,13 @@ More
 
 <footer>
     <hr>
-    <br>
-    <button style="margin: 10px"><a href="#TOC">back to the top</a></button>
+    <br />
+    <button style="margin-bottom: 10px"><a href="#TOC">back to the top</a></button>
     <br />
     <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
         <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
     </a>
+    <br />
     This work is licensed under a
     <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
     Creative Commons Attribution 4.0 International License
