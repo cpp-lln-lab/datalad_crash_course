@@ -307,19 +307,23 @@ way book</a>
 
 <details><summary> <b>For the GIT users out there...</b> </summary><br>
 
-Datalad does not have what is called a "staging area" in GIT. So there is no
-need to "add" a file before it can be committed.
+<p>
+  Datalad does not have what is called a "staging area" in GIT. So there is no
+  need to "add" a file before it can be committed. More info on this
+  <a href="http://handbook.datalad.org/en/latest/basics/101-180-FAQ.html#where-is-git-s-staging-area-in-datalad-datasets" target="_blank">here.</a>
+</p>
 
-More info on this
-<a href="http://handbook.datalad.org/en/latest/basics/101-180-FAQ.html#where-is-git-s-staging-area-in-datalad-datasets" target="_blank">here</a>
+<p>
+  Even though you CAN use the typical holy trinity of git commands (<code>git
+  add</code> / <code>git commit</code> / <code>git push</code>) when working
+  within a Datalad dataset, I would recommended using typical Datalad command like
+  </code>datalad save</code>, unless you are sure of what you are doing.
+</p>
 
-Even though you CAN use the typical holy trinity of git commands (<code>git
-add</code> / <code>git commit</code> / <code>git push</code>) when working
-within a Datalad dataset, I would recommended using typical Datalad command like
-</code>datalad save</code>, unless you are sure of what you are doing.
-
-However it is completely fine to use Datalad commands within a pure git
-repository.
+<p>
+  However it should be completely fine to use Datalad commands within a pure git
+  repository.
+</p>
 
 </details>
 
