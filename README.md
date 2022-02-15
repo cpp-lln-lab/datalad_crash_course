@@ -10,26 +10,26 @@
 - [Prerequisites](#prerequisites)
   - [Pre-flight checks](#pre-flight-checks)
 - [Install a BIDS dataset](#install-a-bids-dataset)
-  - [From GIN](#from-gin)
+  - [From GIN 🍸](#from-gin-)
   - [From openneuro](#from-openneuro)
   - [Install it](#install-it)
 - [Try to open a “text” file](#try-to-open-a-text-file)
-- [Saving data](#saving-data)
+- [Saving data 💾](#saving-data-)
 - [Renaming a file](#renaming-a-file)
-- [Try to open a datafile and failing ❎](#try-to-open-a-datafile-and-failing-)
+- [Try to open a datafile and failing ❌](#try-to-open-a-datafile-and-failing-)
   - [🚨 Under the hood: remote content 🚨](#-under-the-hood-remote-content-)
 - [Getting data](#getting-data)
-- [Try to open a datafile and succeeding ✔️](#try-to-open-a-datafile-and-succeeding-️)
-- [Modifying data and failing ❎](#modifying-data-and-failing-)
+- [Try to open a datafile and succeeding ✅](#try-to-open-a-datafile-and-succeeding-)
+- [Modifying data and failing ❌](#modifying-data-and-failing-)
   - [🚨 Under the hood: annexed files 🚨](#-under-the-hood-annexed-files-)
-- [Unlocking data](#unlocking-data)
-- [Modifying data and succeeding ✔️](#modifying-data-and-succeeding-️)
-- [Saving data again](#saving-data-again)
+- [Unlocking data 🔓](#unlocking-data-)
+- [Modifying data and succeeding ✅](#modifying-data-and-succeeding-)
+- [Saving data again 💾](#saving-data-again-)
 - [The history of the dataset](#the-history-of-the-dataset)
-- [Pushing data and failing ❎](#pushing-data-and-failing-)
+- [Pushing data and failing ❌](#pushing-data-and-failing-)
   - [🚨 Under the hood: siblings 🚨](#-under-the-hood-siblings-)
-- [Creating a remote repo on GIN](#creating-a-remote-repo-on-gin)
-- [Pushing data and succeeding ✔️](#pushing-data-and-succeeding-️)
+- [Creating a remote repo on GIN 🍸](#creating-a-remote-repo-on-gin-)
+- [Pushing data and succeeding ✅](#pushing-data-and-succeeding-)
 - [Dropping data](#dropping-data)
 - [Creating a dataset from scratch](#creating-a-dataset-from-scratch)
   - [Backing it up online](#backing-it-up-online)
@@ -120,7 +120,7 @@ rm -rf ~/CPP_visMotion-raw
 
 Choose a BIDS dataset you want to install.
 
-### From GIN
+### From GIN 🍸
 
 - a
   [public fMRI dataset from our lab](https://gin.g-node.org/cpp-lln-lab/CPP_visMotion-raw)
@@ -241,7 +241,7 @@ You see you can open, modify and save that file.
 <hr>
 <br>
 
-## Saving data
+## Saving data 💾
 
 Now let's see what datalad says about the status of our dataset.
 
@@ -318,6 +318,9 @@ add</code> / <code>git commit</code> / <code>git push</code>) when working
 within a Datalad dataset, I would recommended using typical Datalad command like
 </code>datalad save</code>, unless you are sure of what you are doing.
 
+However it is completely fine to use Datalad commands within a pure git
+repository.
+
 </details>
 
 <br>
@@ -360,7 +363,7 @@ action summary:
 <hr>
 <br>
 
-## Try to open a datafile and failing ❎
+## Try to open a datafile and failing ❌
 
 Let's try to open a file that is not "just" a text file.
 
@@ -439,7 +442,7 @@ get(ok): sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii (file) [from orig
 Depending on the color highlighting of your terminal, you might even see a
 difference on the color of the file whose content you just got.
 
-## Try to open a datafile and succeeding ✔️
+## Try to open a datafile and succeeding ✅
 
 You can now browse the actual content of that file.
 
@@ -448,7 +451,7 @@ You can now browse the actual content of that file.
 <hr>
 <br>
 
-## Modifying data and failing ❎
+## Modifying data and failing ❌
 
 Let's now try to something basic on this image to modify it, like reorienting it
 with SPM by setting the origin of the image to the anterior commissure.
@@ -545,7 +548,7 @@ To be able to edit this file, we must first unlock it.
 <hr>
 <br>
 
-## Unlocking data
+## Unlocking data 🔓
 
 This is done with the `datalad unlock` command.
 
@@ -604,7 +607,7 @@ been modified because it was taken out of the annex.
 <hr>
 <br>
 
-## Modifying data and succeeding ✔️
+## Modifying data and succeeding ✅
 
 Now let's try to modify this file again.
 
@@ -638,7 +641,7 @@ new file created by SPM.
 <hr>
 <br>
 
-## Saving data again
+## Saving data again 💾
 
 **Example**
 
@@ -701,7 +704,7 @@ is your "best destination".
 <hr>
 <br>
 
-## Pushing data and failing ❎
+## Pushing data and failing ❌
 
 Now that we have made a change we want to back it up online to make sure it is
 not lost in case our computer catches on fire. 💻🔥
@@ -744,7 +747,7 @@ so**, it is extremely unlikely you will break or destroy someone else's data.
 <hr>
 <br>
 
-## Creating a remote repo on GIN
+## Creating a remote repo on GIN 🍸
 
 So let's create a repository on GIN.
 
@@ -782,7 +785,7 @@ datalad siblings add --name a_new_beginning --url git@gin.g-node.org:/RemiGau/a_
 <hr>
 <br>
 
-## Pushing data and succeeding ✔️
+## Pushing data and succeeding ✅
 
 You should now be able to push your changes to this new sibling.
 
@@ -939,6 +942,8 @@ In this case...
 cd ${directory_where_your_data_are}
 datalad create --force .
 ```
+
+
 
 ### Backing it up online
 
