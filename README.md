@@ -317,7 +317,7 @@ way book</a>
   Even though you CAN use the typical holy trinity of git commands (<code>git
   add</code> / <code>git commit</code> / <code>git push</code>) when working
   within a Datalad dataset, I would recommended using typical Datalad command like
-  </code>datalad save</code>, unless you are sure of what you are doing.
+  <code>datalad save</code>, unless you are sure of what you are doing.
 </p>
 
 <p>
@@ -526,7 +526,7 @@ write (`w`), execute (`x`) rights on those files. More on unix file permission
 We cannot edit this file, because its content has been "annexed".
 
 You can usually tell a file is annexed when listing it in a terminal with
-`ls -l` or when viewing it with `tree`
+`ls -l` or when viewing it with `tree`.
 
 ```bash
 lrwxrwxrwx 1 remi remi  139 Feb 14 14:23 sub-con07_ses-01_run-01_T1w.nii -> ../../../.git/annex/objects/j5/G3/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii
@@ -964,7 +964,6 @@ In this case...
 ![](./images/use_the_force.jpg)
 
 ```bash
-cd ${directory_where_your_data_are}
 datalad create --force .
 ```
 
