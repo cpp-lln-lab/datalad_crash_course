@@ -14,6 +14,8 @@
   - [From openneuro](#from-openneuro)
   - [Install it](#install-it)
 - [Try to open a “text” file](#try-to-open-a-text-file)
+- [Saving data](#saving-data)
+- [Renaming a file](#renaming-a-file)
 - [Try to open a datafile and failing](#try-to-open-a-datafile-and-failing)
   - [🚨 Remote content 🚨](#-remote-content-)
 - [Getting data](#getting-data)
@@ -22,7 +24,7 @@
   - [🚨 Under the hood: annexed files 🚨](#-under-the-hood-annexed-files-)
 - [Unlocking data](#unlocking-data)
 - [Modifying data and succeeding](#modifying-data-and-succeeding)
-- [Saving data](#saving-data)
+- [Saving data again](#saving-data-again)
 - [The history of the dataset](#the-history-of-the-dataset)
 - [Pushing data and failing](#pushing-data-and-failing)
   - [🚨 Under the hood: siblings 🚨](#-under-the-hood-siblings-)
@@ -183,7 +185,7 @@ datalad install -s ${url} \
 
 ```bash
 datalad install -s git@gin.g-node.org:/cpp-lln-lab/CPP_visMotion-raw.git \
-                /home/remi/gin/CPP_visMotion-raw
+                ~/gin/CPP_visMotion-raw
 ```
 
 If everything went smoothly the folder structure and the files should now be on
@@ -196,12 +198,12 @@ terminal.
 ## Try to open a “text” file
 
 If we have a quick look at the content of our data, we can see that it contains
-some plain text file like JSON or TSV.
+some plain text file like the README, or some JSON or TSV.
 
 **Example**
 
 ```bash
-cd /home/remi/gin/CPP_visMotion-raw
+cd ~/gin/CPP_visMotion-raw
 tree -L 1
 ```
 
@@ -230,12 +232,90 @@ in case you don't have it.
 └── task-visMotion_bold.json
 ```
 
-Try to open and edit one of these text files with your favorite text editor.
+Try to open and edit one of these text files with your favorite text editor: for
+example adding some details in the README (there are rarely enough details in
+those anyway).
 
-You can both open, modify and save that file.
+You see you can open, modify and save that file.
 
 <hr>
 <br>
+
+## Saving data
+
+Now let's see what datalad says about the status of our dataset.
+
+```bash
+datalad status
+```
+
+**Example output**
+
+```bash
+ modified: README (file)
+ ```
+
+When you want to save the changes you made to a dataset, simply use the
+`datalad save` command.
+
+You should also add a specific message to your save, to describe the content of
+the save.
+
+Here are some
+[tips on how to write good save messages](http://handbook.datalad.org/en/latest/basics/101-102-populate.html#fom-commit-message-guidance).
+
+Note that a save are often reffered to as "commits" and that are thus
+accompanied by a "commit message".
+
+**Example**
+
+```bash
+datalad save -m 'Update README'
+```
+
+**Example output**
+
+```bash
+add(ok): README (file)
+save(ok): . (dataset)
+action summary:
+  add (ok: 1)
+  save (ok: 1)
+```
+
+## Renaming a file
+
+Now let's rename one of our non-text file and see how that goes.
+
+This can be done via your usual file explorer or via the terminal with the move command (`mv`).
+
+```bash
+mv -v sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii
+```
+
+**Example output**
+
+```bash
+renamed 'sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii' -> 'sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii'
+```
+
+OK that seems to work. So let's save that change too.
+
+```bash
+datalad save -m 'Rename anat subject con07'
+```
+
+**Example output**
+
+```bash
+delete(ok): sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii (file)
+add(ok): sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii (file)
+save(ok): . (dataset)
+action summary:
+  add (ok: 1)
+  delete (ok: 1)
+  save (ok: 1)
+```
 
 ## Try to open a datafile and failing
 
@@ -259,8 +339,8 @@ tree -L 3 sub-con07
 sub-con07
 └── ses-01
     ├── anat
-    │   ├── sub-con07_ses-01_T1w.json
-    │   └── sub-con07_ses-01_T1w.nii -> ../../../.git/annex/objects/j5/G3/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii
+    │   ├── sub-con07_ses-01_run-01_T1w.nii -> ../../../.git/annex/objects/j5/G3/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii
+    │   └── sub-con07_ses-01_T1w.json
     └── func
         ├── sub-con07_ses-01_task-visMotion_bold.nii -> ../../../.git/annex/objects/mJ/PF/MD5E-s370137952--89a6190d568fa6cbb0fd1f23eb763b0c.nii/MD5E-s370137952--89a6190d568fa6cbb0fd1f23eb763b0c.nii
         └── sub-con07_ses-01_task-visMotion_events.tsv
@@ -301,7 +381,6 @@ datalad get ${path_to_the_folder_or_file}
 **Example**
 
 ```bash
-cd /home/remi/gin/CPP_visMotion-raw
 datalad get sub-con07/anat/*T1w.nii
 ```
 
@@ -321,14 +400,14 @@ More on bash "globbing"
 **Example output**
 
 ```bash
-Total:   0%|                                                                             | 0.00/25.2M [00:00<?, ? Bytes/s]
-Get sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii:  34%|████████                        | 8.58M/25.2M [00:00<00:00, 64.9M Bytes/s]
+Total:   0%|                                                                                    | 0.00/25.2M [00:00<?, ? Bytes/s]
+Get sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii:  34%|████████                        | 8.58M/25.2M [00:00<00:00, 64.9M Bytes/s]
 ```
 
 And eventually:
 
 ```bash
-get(ok): sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii (file) [from origin...]
+get(ok): sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii (file) [from origin...]
 ```
 
 **Note**
@@ -366,10 +445,10 @@ and will _fail majestically_ in the process.
 14-Feb-2022 15:49:23 - Running 'Reorient Images'
 Error: Permission denied
 There was a problem writing to the header of
-  "/home/remi/gin/CPP_visMotion-raw/sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii"
+  "/home/remi/gin/CPP_visMotion-raw/sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii"
 14-Feb-2022 15:49:24 - Failed  'Reorient Images'
 Error using nifti/create (line 26)
-Unable to write header for "/home/remi/gin/CPP_visMotion-raw/sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii".
+Unable to write header for "/home/remi/gin/CPP_visMotion-raw/sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii".
 In file "/home/remi/matlab/SPM/spm12/@nifti/create.m" (v7147), function "create" at line 26.
 In file "/home/remi/matlab/SPM/spm12/spm_get_space.m" (v6379), function "spm_get_space" at line 51.
 In file "/home/remi/matlab/SPM/spm12/config/spm_run_reorient.m" (v6078), function "spm_run_reorient" at line 33.
@@ -403,7 +482,7 @@ ls -l sub-con07/ses-01/anat
 
 ```bash
 -rwxrwxr-x 1 remi remi 2170 Feb 14 14:23 sub-con07_ses-01_T1w.json
-lrwxrwxrwx 1 remi remi  139 Feb 14 14:23 sub-con07_ses-01_T1w.nii -> ../../../.git/annex/objects/j5/G3/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii
+lrwxrwxrwx 1 remi remi  139 Feb 14 14:23 sub-con07_ses-01_run-01_T1w.nii -> ../../../.git/annex/objects/j5/G3/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii
 ```
 
 The `rwxrwxrwx` at the beginning of these lines defines if we have read (`r`),
@@ -418,7 +497,7 @@ You can usually tell a file is annexed when listing it in a terminal with
 `ls -l` or when viewing it with `tree`
 
 ```bash
-lrwxrwxrwx 1 remi remi  139 Feb 14 14:23 sub-con07_ses-01_T1w.nii -> ../../../.git/annex/objects/j5/G3/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii
+lrwxrwxrwx 1 remi remi  139 Feb 14 14:23 sub-con07_ses-01_run-01_T1w.nii -> ../../../.git/annex/objects/j5/G3/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii/MD5E-s25166176--d5dec5aad67f659c2f218f096cb4b8d4.nii
 ```
 
 - the `l` means that the file you are looking at is a "link"
@@ -460,7 +539,7 @@ datalad unlock sub-con07/ses-01/anat/*T1w.nii
 **Example output**
 
 ```bash
-unlock(ok): sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii (file)
+unlock(ok): sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii (file)
 ```
 
 The result of unlocking the file will be visible in different ways.
@@ -480,7 +559,7 @@ sub-con07
 └── ses-01
     ├── anat
     │   ├── sub-con07_ses-01_T1w.json
-    │   └── sub-con07_ses-01_T1w.nii
+    │   └── sub-con07_ses-01_run-01_T1w.nii
     └── func
         ├── sub-con07_ses-01_task-visMotion_bold.nii -> ../../../.git/annex/objects/mJ/PF/MD5E-s370137952--89a6190d568fa6cbb0fd1f23eb763b0c.nii/MD5E-s370137952--89a6190d568fa6cbb0fd1f23eb763b0c.nii
         └── sub-con07_ses-01_task-visMotion_events.tsv
@@ -494,7 +573,7 @@ been modified because it was taken out of the annex.
 **Example output**
 
 ```bash
- modified: sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii (file)
+ modified: sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii (file)
 ```
 
 <hr>
@@ -524,8 +603,8 @@ datalad status
 **Example output**
 
 ```matlab
-untracked: sub-con07/ses-01/anat/sub-con07_ses-01_T1w_reorient.mat (file)
- modified: sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii (file)
+untracked: sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w_reorient.mat (file)
+ modified: sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii (file)
 ```
 
 Now datalad tells us about the files that have been modified and also about the
@@ -534,19 +613,7 @@ new file created by SPM.
 <hr>
 <br>
 
-## Saving data
-
-When you want to save the changes you made to a dataset, simply use the
-`datalad save` command.
-
-You should also add a specific message to your save, to describe the content of
-the save.
-
-Here are some
-[tips on how to write good save messages](http://handbook.datalad.org/en/latest/basics/101-102-populate.html#fom-commit-message-guidance).
-
-Note that a save are often reffered to as "commits" and that are thus
-accompanied by a "commit message".
+## Saving data again
 
 **Example**
 
@@ -558,7 +625,7 @@ datalad save -m 'setting origin to anterior commissure for subject 07'
 
 ```bash
 add(ok): sub-con07/ses-01/anat/sub-con07_ses-01_T1w_reorient.mat (file)
-add(ok): sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii (file)
+add(ok): sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii (file)
 save(ok): . (dataset)
 action summary:
   add (ok: 2)
@@ -576,7 +643,7 @@ tree -L 3 sub-con07/anat
 ```bash
 sub-con07/ses-01/anat
 ├── sub-con07_ses-01_T1w.json
-├── sub-con07_ses-01_T1w.nii -> ../../../.git/annex/objects/VK/WP/MD5E-s25166176--f4db32e160f289d5cc01d3a23aadf4d0.nii/MD5E-s25166176--f4db32e160f289d5cc01d3a23aadf4d0.nii
+├── sub-con07_ses-01_run-01_T1w.nii -> ../../../.git/annex/objects/VK/WP/MD5E-s25166176--f4db32e160f289d5cc01d3a23aadf4d0.nii/MD5E-s25166176--f4db32e160f289d5cc01d3a23aadf4d0.nii
 └── sub-con07_ses-01_T1w_reorient.mat -> ../../../.git/annex/objects/68/79/MD5E-s312--85774df306f765822b4c203bca41bb13.mat/MD5E-s312--85774df306f765822b4c203bca41bb13.mat
 ```
 
@@ -594,6 +661,8 @@ If you want a less verbose version of the log: `git log --online`.
 
 ```bash
 097059d (HEAD -> master) setting origin to anterior commissure for subject 07
+c4a039e Rename anat subject con07
+8c82a0f Update README
 b003e21 (origin/master, origin/HEAD) initial save
 2a72d36 Instruct annex to add text files to Git
 52c0844 [DATALAD] new dataset
@@ -699,16 +768,16 @@ datalad push --to a_new_beginning
 **Example output**
 
 ```bash
-Transfer data to 'a_new_beginning':  50%|██████████████████████▌                      | 2.00/4.00 [00:00<00:00, 8.36k Steps/s]
+Transfer data to 'a_new_beginning':  50%|██████████████████████▌                             | 2.00/4.00 [00:00<00:00, 8.36k Steps/s]
 Total:   0%|                                                                                 | 0.00/1.17G [00:00<?, ? Bytes/s]
-Copy sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii:  54%|██████████████▏           | 13.7M/25.2M [00:09<00:07, 1.62M Bytes/s]
+Copy sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii:  54%|██████████████▏             | 13.7M/25.2M [00:09<00:07, 1.62M Bytes/s]
 ```
 
 And eventually:
 
 ```bash
-copy(ok): sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii (file) [to a_new_beginning...]
-copy(ok): sub-con07/ses-01/anat/sub-con07_ses-01_T1w_reorient.mat (file) [to a_new_beginning...]
+copy(ok): sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii (file) [to a_new_beginning...]
+copy(ok): sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w_reorient.mat (file) [to a_new_beginning...]
 publish(ok): . (dataset) [refs/heads/git-annex->a_new_beginning:refs/heads/git-annex e2c7f02..0a33ba9]
 publish(ok): . (dataset) [refs/heads/master->a_new_beginning:refs/heads/master [new branch]]
 action summary:
@@ -736,8 +805,8 @@ here
 |||web
 ||||bittorrent
 |||||
-XXX__ sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii
-XX___ sub-con07/ses-01/anat/sub-con07_ses-01_T1w_reorient.mat
+XXX__ sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii
+XX___ sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w_reorient.mat
 __X__ sub-con07/ses-01/func/sub-con07_ses-01_task-visMotion_bold.nii
 __X__ sub-con08/ses-01/anat/sub-con08_ses-01_T1w.nii
 __X__ sub-con08/ses-01/func/sub-con08_ses-01_task-visMotion_bold.nii
@@ -806,8 +875,8 @@ datalad drop .
 **Example**
 
 ```bash
-drop(ok): /home/remi/gin/CPP_visMotion-raw/sub-con07/ses-01/anat/sub-con07_ses-01_T1w.nii (file) [locking a_new_beginning...]
-drop(ok): /home/remi/gin/CPP_visMotion-raw/sub-con07/ses-01/anat/sub-con07_ses-01_T1w_reorient.mat (file) [locking a_new_beginning...]
+drop(ok): /home/remi/gin/CPP_visMotion-raw/sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii (file) [locking a_new_beginning...]
+drop(ok): /home/remi/gin/CPP_visMotion-raw/sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w_reorient.mat (file) [locking a_new_beginning...]
 action summary:
   drop (notneeded: 20, ok: 2)
 ```
