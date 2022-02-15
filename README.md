@@ -701,6 +701,8 @@ through the history of a dataset to see what it looked like at a given commit,
 you can quickly imagine that having good commit messages helps you knowing what
 is your "best destination".
 
+![](./images/tardis.gif)
+
 <hr>
 <br>
 
@@ -871,11 +873,11 @@ back up (as siblings) synched. But if you need to make some space on your
 computer without having to delete a dataset, Datalad also allows you to drop the
 content of files locally.
 
-Conceptually this is the a bit like the opposite of the `datalad get` command we
-saw earlier that would get the content of file from a sibling.
+Conceptually this is a bit like the opposite of the `datalad get` command we saw
+earlier that would get the content of file from a sibling.
 
-`datalad drop` will get rid of a content provided that this content exists in
-another sibling.
+`datalad drop` will instead remove the content of a file from the annex provided
+that this content exists in another sibling.
 
 To know how much data exists in your annex currently you can use
 `datalad status --annex all`.
@@ -929,10 +931,29 @@ data. This can be done with the `datalad create` command.
 datalad create ${name_of_the_dataset}
 ```
 
-This will create a new folder and initiaze a Datalad dataset in it.
+This will create a new folder and initialize a Datalad dataset in it.
 
 > What if I already have a folder with my data and I want to create a dataset in
 > there?
+
+For example
+
+```bash
+cd ~/gin/raw
+tree -d
+```
+
+**Example output**
+
+```bash
+.
+└── sub-001
+    ├── ses-01
+    │   ├── anat
+    │   └── func
+    └── ses-02
+        └── func
+```
 
 In this case...
 
@@ -943,7 +964,12 @@ cd ${directory_where_your_data_are}
 datalad create --force .
 ```
 
+**Example output**
 
+```bash
+[INFO   ] Creating a new annex repo at /home/remi/gin/raw
+create(ok): /home/remi/gin/raw (dataset)
+```
 
 ### Backing it up online
 
