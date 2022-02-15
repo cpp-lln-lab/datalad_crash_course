@@ -16,20 +16,20 @@
 - [Try to open a “text” file](#try-to-open-a-text-file)
 - [Saving data](#saving-data)
 - [Renaming a file](#renaming-a-file)
-- [Try to open a datafile and failing](#try-to-open-a-datafile-and-failing)
+- [Try to open a datafile and failing ❎](#try-to-open-a-datafile-and-failing-)
   - [🚨 Remote content 🚨](#-remote-content-)
 - [Getting data](#getting-data)
-- [Try to open a datafile and succeeding](#try-to-open-a-datafile-and-succeeding)
-- [Modifying data and failing](#modifying-data-and-failing)
+- [Try to open a datafile and succeeding ✔️](#try-to-open-a-datafile-and-succeeding-️)
+- [Modifying data and failing ❎](#modifying-data-and-failing-)
   - [🚨 Under the hood: annexed files 🚨](#-under-the-hood-annexed-files-)
 - [Unlocking data](#unlocking-data)
-- [Modifying data and succeeding](#modifying-data-and-succeeding)
+- [Modifying data and succeeding ✔️](#modifying-data-and-succeeding-️)
 - [Saving data again](#saving-data-again)
 - [The history of the dataset](#the-history-of-the-dataset)
-- [Pushing data and failing](#pushing-data-and-failing)
+- [Pushing data and failing ❎](#pushing-data-and-failing-)
   - [🚨 Under the hood: siblings 🚨](#-under-the-hood-siblings-)
 - [Creating a remote repo](#creating-a-remote-repo)
-- [Pushing data and succeeding](#pushing-data-and-succeeding)
+- [Pushing data and succeeding ✔️](#pushing-data-and-succeeding-️)
 - [Dropping data](#dropping-data)
 - [Creating a dataset from scratch](#creating-a-dataset-from-scratch)
   - [Backing it up online](#backing-it-up-online)
@@ -207,7 +207,7 @@ cd ~/gin/CPP_visMotion-raw
 tree -L 1
 ```
 
-<details><summary> <b>What's this <code>tree</code> command?</b> </summary><br>
+<details><summary> <b>What's this <code>tree 🌳</code> command?</b> </summary><br>
 
 See this
 <a href="http://handbook.datalad.org/en/latest/basics/101-102-populate.html#f1">footnote</a>
@@ -321,7 +321,7 @@ action summary:
 <hr>
 <br>
 
-## Try to open a datafile and failing
+## Try to open a datafile and failing ❎
 
 Let's try to open a file that is not "just" a text file.
 
@@ -400,7 +400,7 @@ get(ok): sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii (file) [from orig
 Depending on the color highlighting of your terminal, you might even see a
 difference on the color of the file whose content you just got.
 
-## Try to open a datafile and succeeding
+## Try to open a datafile and succeeding ✔️
 
 You can now browse the actual content of that file.
 
@@ -409,7 +409,7 @@ You can now browse the actual content of that file.
 <hr>
 <br>
 
-## Modifying data and failing
+## Modifying data and failing ❎
 
 Let's now try to something basic on this image to modify it, like reorienting it
 with SPM by setting the origin of the image to the anterior commissure.
@@ -454,8 +454,9 @@ Error while evaluating Menu Callback.
 The important error in there is `Error: Permission denied`.
 
 However if we check the file permissions with our file explorer / finder (or
-with the terminal), we can see that we have "write access" to these data. And
-yet we can edit the simple "text" data and not the non "text" data.
+with the terminal with the list command `ls -l`), we can see that we have "write
+access" to all of these files. And yet we can edit the simple "text" file and not the
+non "text" data.
 
 **Example**
 
@@ -564,7 +565,7 @@ been modified because it was taken out of the annex.
 <hr>
 <br>
 
-## Modifying data and succeeding
+## Modifying data and succeeding ✔️
 
 Now let's try to modify this file again.
 
@@ -653,15 +654,15 @@ b003e21 (origin/master, origin/HEAD) initial save
 52c0844 [DATALAD] new dataset
 ```
 
-Given that more advanced usage of datalad allow you to "travel in time" through
-the history of a dataset to see what it looked like at a given commit, you can
-quickly imagine that having good commit messages helps you knowing what is your
-"best destination".
+Given that more advanced usage of datalad allow you to "travel in time" 🕥🔄
+through the history of a dataset to see what it looked like at a given commit,
+you can quickly imagine that having good commit messages helps you knowing what
+is your "best destination".
 
 <hr>
 <br>
 
-## Pushing data and failing
+## Pushing data and failing ❎
 
 Now that we have made a change we want to back it up online to make sure it is
 not lost in case our computer catches on fire. 💻🔥
@@ -742,7 +743,7 @@ datalad siblings add --name a_new_beginning --url git@gin.g-node.org:/RemiGau/a_
 <hr>
 <br>
 
-## Pushing data and succeeding
+## Pushing data and succeeding ✔️
 
 You should now be able to push your changes to this new sibling.
 
@@ -808,7 +809,7 @@ datalad push --to a_new_beginning
 ```
 
 We are not going to do that now otherwise we are going to be at this until the
-cows come home.
+cows come home. 🐮 ➡️ 🏠
 
 <hr>
 <br>
