@@ -33,6 +33,8 @@
 - [Dropping data](#dropping-data)
 - [Creating a dataset from scratch](#creating-a-dataset-from-scratch)
   - [Backing it up online](#backing-it-up-online)
+- [Oops! I turned my home folder into a datalad dataset... 🙈](#oops-i-turned-my-home-folder-into-a-datalad-dataset-)
+  - [🚨 Under the hood: the `.git` folder 🚨](#-under-the-hood-the-git-folder-)
 - [Useful tips](#useful-tips)
 - [Useful links](#useful-links)
 
@@ -802,7 +804,7 @@ datalad push --to a_new_hope
 **Example output**
 
 ```bash
-Transfer data to 'a_new_hope':  50%|██████████████████████▌                             | 2.00/4.00 [00:00<00:00, 8.36k Steps/s]
+Transfer data to 'a_new_hope':  50%|██████████████████████▌                                  | 2.00/4.00 [00:00<00:00, 8.36k Steps/s]
 Total:   0%|                                                                                 | 0.00/1.17G [00:00<?, ? Bytes/s]
 Copy sub-con07/ses-01/anat/sub-con07_ses-01_run-01_T1w.nii:  54%|██████████████▏             | 13.7M/25.2M [00:09<00:07, 1.62M Bytes/s]
 ```
@@ -818,6 +820,21 @@ action summary:
   copy (ok: 2)
   publish (ok: 2)
 ```
+
+If you now refresh the web page of your GIN repository, it should display the
+content of your data set.
+
+<details><summary> <b>My repo in GIN looks nothing like what I have on my computer!!</b> </summary><br>
+
+This might be because you are actually viewing the annexed content of your
+dataset that lives on the "git-annex branch":
+<a href="http://handbook.datalad.org/en/latest/basics/101-180-FAQ.html#help-why-does-github-display-my-dataset-with-git-annex-as-the-default-branch" target="_blank">click
+here to see how to fix it</a> (the fix relates to GitHub repositories but works
+on GIN too).
+
+</details>
+
+<br>
 
 Note however that your remote siblings contains the content for the data you had
 in your local sibling.
@@ -856,7 +873,7 @@ datalad get .
 datalad push --to a_new_hope
 ```
 
-We are not going to do that now otherwise we are going to be at this until the
+We are not going to do that now, otherwise we are going to be at this until the
 cows come home. 🐮 ➡️ 🏠
 
 <hr>
@@ -997,6 +1014,52 @@ Grab a coffee and look at that progress bar go! 🚀
 
 <hr>
 <br>
+
+## Oops! I turned my home folder into a datalad dataset... 🙈
+
+> **It happened so quickly!** `#TrueStory`
+
+🚨 DON'T TRY THIS AT HOME 🚨
+
+```bash
+# when not given any argument
+# the "change directory" command will bring you to your home folder
+cd
+
+# if you now force create a datalad dataset,
+# you are basically telling datalad to version control your whole home folder
+datalad create --force .
+```
+
+Imagine you typed the 2 commands above. Now datalad wants to track all the files
+in your computer.
+
+FYI: if by any chance you were planning to use datalad to back up you computer,
+there are better tools for this.
+
+More seriously. How to fix this?
+
+OK that gives us the occasion to do a shallow dive into the plumbings of
+Datalad. 🕵️‍♀️
+
+### 🚨 Under the hood: the `.git` folder 🚨
+
+Basically all the history of your Datalad dataset is store in the hidden folder
+`.git` that lives in the root of your dataset.
+
+Additionally, data that has been annexed AND locked is stored in `.git/annex`.
+
+Note that you might need to change some settings in your file explorer / finder
+to be able to see hidden folders, in a terminal you can see those folders by
+using `ls -a`).
+
+So if you have created a Datalad dataset in the wrong place, you can simply
+delete the `.git` and `.datalad` folders. **HOWEVER** if you have already saved
+some data in that dataset, make sure you unlock it before removing the folder
+otherwise you will lose the data.
+
+If you want an hour long deep dive on the content of the `.git` folder,
+[check this video](https://www.youtube.com/watch?v=gdY_RpY2oyU).
 
 ## Useful tips
 
