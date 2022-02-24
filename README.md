@@ -35,6 +35,7 @@
   - [Backing it up online](#backing-it-up-online)
 - [Oops! I turned my home folder into a datalad dataset... 🙈](#oops-i-turned-my-home-folder-into-a-datalad-dataset-)
   - [🚨 Under the hood: the `.git` folder 🚨](#-under-the-hood-the-git-folder-)
+- [Oops! I accidentaly deleted some files. How can I bring them back?](#oops-i-accidentaly-deleted-some-files-how-can-i-bring-them-back)
 - [Useful tips](#useful-tips)
 - [Useful links](#useful-links)
 
@@ -1019,7 +1020,7 @@ Grab a coffee and look at that progress bar go! 🚀
 
 > **It happened so quickly!** `#TrueStory`
 
-🚨 DON'T TRY THIS AT HOME 🚨
+🚨 DON'T TRY THIS AT $HOME 🚨 ([pun intended](https://xkcd.com/559/))
 
 ```bash
 # when not given any argument
@@ -1060,6 +1061,43 @@ otherwise you will lose the data.
 
 If you want an hour long deep dive on the content of the `.git` folder,
 [check this video](https://www.youtube.com/watch?v=gdY_RpY2oyU).
+
+<hr>
+<br>
+
+## Oops! I accidentaly deleted some files. How can I bring them back?
+
+If you deleted some files but have not yet saved those changes, there is an easy
+way to bring them back.
+
+In case you don't remember type `git status` and it should show a listing of
+file changes including deletion, like the example below.
+
+**Example output**
+
+```
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   README.md
+        deleted:    images/use_the_force.jpg
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+A lot of git commands give you hint on what to type to do certain things.
+
+Here it tells you that undo this deletion I would have to type:
+
+```bash
+git restore images/use_the_force.jpg
+```
+
+<hr>
+<br>
 
 ## Useful tips
 
