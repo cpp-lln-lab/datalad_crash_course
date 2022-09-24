@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7110374.svg)](https://doi.org/10.5281/zenodo.7110374)
+
 <h1 style="width: 120%"> Datalad crash course </h1>
 
 <!-- insert datalad and crash test dummies image -->
