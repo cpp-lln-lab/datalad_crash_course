@@ -128,7 +128,7 @@ Choose a BIDS dataset you want to install.
 ### From GIN 🍸
 
 - a
-  [public fMRI dataset from our lab](https://gin.g-node.org/cpp-lln-lab/CPP_visMotion-raw)
+  [public fMRI dataset from our lab](https://gin.g-node.org/cpp-lln-lab/Toronto_VisMotionLocalizer_MR_raw)
 - your own dataset from GIN: it should be in a private repository you should
   have access to in the
   [CPP LLN lab organization on GIN](https://gin.g-node.org/cpp-lln-lab)
